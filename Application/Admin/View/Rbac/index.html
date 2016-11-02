@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+	    <!-- Loading Bootstrap -->
+	    <link href="__PUBLIC__/Admin/Flat/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+	    <!-- Loading Flat UI -->
+	    <link href="__PUBLIC__/Admin/Flat/dist/css/flat-ui.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="__PUBLIC__/Admin/Flat/img/favicon.ico">
+	    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+	    <!--[if lt IE 9]>
+	      <script src="dist/js/vendor/html5shiv.js"></script>
+	      <script src="dist/js/vendor/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+	<body>
+		<table class="table table-hover" border="1">
+			<tr class="active">
+			  <th style="text-align: center;vertical-align: middle;">ID</th>
+			  <th style="text-align: center;vertical-align: middle;">用户名称</th>
+			  <th style="text-align: center;vertical-align: middle;">锁定状态</th>
+			  <th style="text-align: center;vertical-align: middle;">上一次登录时间</th>
+			  <th style="text-align: center;vertical-align: middle;">上一次登录ip</th>
+			  <th style="text-align: center;vertical-align: middle;">用户所属组别</th>
+			  <th style="text-align: center;vertical-align: middle;">操作</th>
+			</tr>
+			<foreach name='users' item='v'>
+				<tr>
+					<td style="text-align: center;vertical-align: middle;">{{$v['id']}}</td>
+					<td style="text-align: center;vertical-align: middle;">{{$v['username']}}</td>
+					<td style="text-align: center;vertical-align: middle;"><if condition='$v["locked"]'>锁定</if></td>
+					<td style="text-align: center;vertical-align: middle;">{{$v['logintime']|date='Y-m-d H:i:s',###}}</td>
+					<td style="text-align: center;vertical-align: middle;">{{$v['loginip']}}</td>
+					<td style="text-align: center;vertical-align: middle;">
+						<ul style="list-style: none;">
+							<if condition='$v["username"] eq C("RBAC_SUPERADMIN")'>
+								超级管理员
+							<else />
+								<foreach name='v.role' item='vv'>
+									<li>
+										{{$vv['name']}}({{$vv['remark']}})
+									</li>
+								</foreach>
+							</if>
+						</ul>
+					</td>
+					<td style="text-align: center;vertical-align: middle;">
+						<if condition='$v["locked"]==0'>
+							<a href="{{:U('Admin/Rbac/lockUser',array('id'=>$v['id']))}}"><if condition='$v["username"]!=admin'>锁定</if></a>
+						<else />
+							<a href="{{:U('Admin/Rbac/UnLockUser',array('id'=>$v['id']))}}"><if condition='$v["username"]!=admin'>解除锁定</if></a>
+						</if>
+					</td>
+				</tr>
+			</foreach>
+		</table>
+	</body>
+</html>

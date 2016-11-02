@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+	    <!-- Loading Bootstrap -->
+	    <link href="__PUBLIC__/Admin/Flat/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+	    <!-- Loading Flat UI -->
+	    <link href="__PUBLIC__/Admin/Flat/dist/css/flat-ui.css" rel="stylesheet">
+	    <link href="__PUBLIC__/Admin/Flat/docs/assets/css/demo.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="__PUBLIC__/Admin/Flat/img/favicon.ico">
+	    <link href="__PUBLIC__/Admin/Flat/dist/css/node.css" rel="stylesheet">
+	    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+	    <!--[if lt IE 9]>
+	      <script src="dist/js/vendor/html5shiv.js"></script>
+	      <script src="dist/js/vendor/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+	<body>
+		<div id='wrap'>
+			<a href="{{:U('Admin/Rbac/addNode')}}" class="add-app">添加应用</a>
+
+			<foreach name='node' item='app'>
+			<div class="app">
+				<p>
+					<strong>{{$app['title']}}</strong>
+					[<a href="{{:U('Admin/Rbac/addNode',array('pid'=>$app['id'],level=>2))}}">添加控制器</a>]
+					[<a href="">修改</a>]
+					[<a href="">删除</a>]
+				</p>
+				<foreach name='app.child' item='action'>
+					<dl>
+						<dt>
+							<strong>{{$action['title']}}</strong>
+							[<a href="{{:U('Admin/Rbac/addNode',array('pid'=>$action['id'],level=>3))}}">添加方法</a>]
+							[<a href="">修改</a>]
+							[<a href="">删除</a>]
+						</dt>
+						<foreach name='action.child' item='method'>
+							<dd>
+								<strong>{{$method['title']}}</strong>
+								[<a href="">修改</a>]
+								[<a href="">删除</a>]
+							</dd>
+						</foreach>
+					</dl>
+				</foreach>
+			</div>
+			</foreach>
+		</div>
+	</body>
+</html>

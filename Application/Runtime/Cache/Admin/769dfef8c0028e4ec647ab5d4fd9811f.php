@@ -1,0 +1,53 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+	    <!-- Loading Bootstrap -->
+	    <link href="/ThinkPHP3.2.3_wish/Public/Admin/Flat/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+	    <!-- Loading Flat UI -->
+	    <link href="/ThinkPHP3.2.3_wish/Public/Admin/Flat/dist/css/flat-ui.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="/ThinkPHP3.2.3_wish/Public/Admin/Flat/img/favicon.ico">
+	    <script src="/ThinkPHP3.2.3_wish/Public/Admin/Flat/dist/js/jquery-1.7.2.min.js"></script>
+	    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+	    <!--[if lt IE 9]>
+	      <script src="dist/js/vendor/html5shiv.js"></script>
+	      <script src="dist/js/vendor/respond.min.js"></script>
+	    <![endif]-->
+	    <script>
+	    	$(function(){
+	    		$('#add-role').click(function(){
+	    			var obj=$(this).parent().clone();
+	    			obj.find('#add-role').remove();
+	    			$('button').before(obj);
+	    		});
+	    	});
+	    </script>
+	</head>
+	<body>
+		<div class="alert alert-success">添加用户</div>
+		<form action="<?php echo U('Admin/Rbac/addUserHandle');?>" method="post">
+			<div class="form-group">
+				<label for="exampleInputEmail1">用户账户</label>
+				<input id="exampleInputEmail1" class="form-control" type="text"  required name="username">
+			</div>
+			
+			<div class="form-group">
+				<label for="exampleInputEmail1">密码</label>
+				<input id="exampleInputEmail1" class="form-control" type="password" required name="pwd">
+			</div>
+			
+			<div class="form-group">
+				<label for="exampleInputEmail1">所属角色:</label>
+				<select name="role_id[]">
+					<option value="">--请选择角色--</option>
+					<?php if(is_array($role)): foreach($role as $key=>$v): ?><option value="<?php echo ($v['id']); ?>"><?php echo ($v['name']); ?>(<?php echo ($v['remark']); ?>)</option><?php endforeach; endif; ?>
+				</select>
+				<span style="display: inline-block;width: 100px;height: 26px;line-height: 26px;text-align: center;border-radius: 4px;border: 1px solid blue;margin-left: 20px;cursor: pointer;" id="add-role">添加角色</span>
+			</div>
+
+			<button class="btn btn-primary btn-block" type="submit"> 保存添加 </button>
+		</form>
+	</body>
+</html>
